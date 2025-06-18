@@ -111,36 +111,36 @@ def create_input_group(label, control_id, control):
 
 # --- APP LAYOUT ---
 app.layout = dbc.Container([
-    dbc.Row(dbc.Col(html.H1("Marseille Apartment Investment Simulator", className="text-center my-4 text-primary"), width=12)),
+    dbc.Row(dbc.Col(html.H1("Marseille Wohnig Simulator", className="text-center my-4 text-primary"), width=12)),
     dbc.Row([
         # --- LEFT PANEL: CONTROLS ---
         dbc.Col([
-            html.H4("Scenario Parameters", className="mb-3"),
+            html.H4("Aanahme", className="mb-3"),
             dbc.Card(dbc.CardBody([
-                create_input_group("Tourist Rental Days / Year", "tourist_days_slider", 
-                    dcc.Slider(id="tourist_days_slider", min=0, max=365, step=1, value=90, marks={i: str(i) for i in range(0, 366, 60)})),
+                create_input_group("Touri Vermietig Täg / Jahr", "tourist_days_slider", 
+                    dcc.Slider(id="tourist_days_slider", min=0, max=365, step=1, value=90, marks={i: str(i) for i in range(0, 366, 30)})),
                 html.Hr(),
-                create_input_group("Friends Rental Days / Year", "friends_days_slider",
+                create_input_group("Fründe Vermietig Täg / Jahr", "friends_days_slider",
                     dcc.Slider(id="friends_days_slider", min=0, max=365, step=1, value=DEFAULT_PARAMS['friends_rental_days_per_year'], marks={i: str(i) for i in range(0, 366, 30)})),
                 html.Hr(),
-                create_input_group("Family Rental Days / Year", "family_days_slider",
+                create_input_group("Bsitzer Vermietig Täg / Jahr", "family_days_slider",
                     dcc.Slider(id="family_days_slider", min=0, max=365, step=1, value=DEFAULT_PARAMS['family_rental_days_per_year'], marks={i: str(i) for i in range(0, 366, 30)})),
                 html.Hr(),
-                create_input_group("Apartment Price (€)", "apartment_price_input", 
+                create_input_group("Wohnigspriis (€)", "apartment_price_input", 
                     dbc.Input(id="apartment_price_input", type="number", value=DEFAULT_PARAMS['apartment_price'], step=10000)),
-                create_input_group("Loan Amount (€)", "loan_amount_input", 
+                create_input_group("Kredit (€)", "loan_amount_input", 
                     dbc.Input(id="loan_amount_input", type="number", value=DEFAULT_PARAMS['loan_amount'], step=10000)),
-                create_input_group("Avg. Property Growth (%/yr)", "property_growth_input", 
+                create_input_group("Priissteigerig Wohnig (%/Jahr)", "property_growth_input", 
                     dbc.Input(id="property_growth_input", type="number", value=DEFAULT_PARAMS['avg_property_value_growth']*100, step=0.1)),
-                create_input_group("Base Interest Rate (%/yr)", "interest_rate_input", 
+                create_input_group("Kreditzins (%/Jahr)", "interest_rate_input", 
                     dbc.Input(id="interest_rate_input", type="number", value=DEFAULT_PARAMS['base_mortgage_interest_rate']*100, step=0.1)),
-                create_input_group("Tourist Price (€/day)", "tourist_price_input", 
+                create_input_group("Turi Priis (€/Tag)", "tourist_price_input", 
                     dbc.Input(id="tourist_price_input", type="number", value=DEFAULT_PARAMS['tourist_rental_price_per_day'], step=5)),
-                create_input_group("Friends Price (€/day)", "friends_price_input", 
+                create_input_group("Fründe Priis (€/Tag)", "friends_price_input", 
                     dbc.Input(id="friends_price_input", type="number", value=DEFAULT_PARAMS['friends_rental_price_per_day'], step=5)),
-                create_input_group("Family Price (€/day)", "family_price_input", 
+                create_input_group("Bsitzer Priis (€/Tag)", "family_price_input", 
                     dbc.Input(id="family_price_input", type="number", value=DEFAULT_PARAMS['family_rental_price_per_day'], step=5)),
-                create_input_group("Annual Fixed Costs (€)", "fixed_costs_input", 
+                create_input_group("Jährlichi Fixköste(€)", "fixed_costs_input", 
                     dbc.Input(id="fixed_costs_input", type="number", value=DEFAULT_PARAMS['annual_fixed_costs'], step=100)),
             ]))
         ], md=4),
@@ -149,11 +149,11 @@ app.layout = dbc.Container([
         dbc.Col([
             dbc.Row([
                 dbc.Col(dbc.Card(dbc.CardBody([
-                    html.H6("Estimated Annualized Return (IRR)", className="card-title"),
+                    html.H6("Rendite (IRR)", className="card-title"),
                     html.H2(id='irr_output', className="text-primary")
                 ], className="text-center")), md=6),
                 dbc.Col(dbc.Card(dbc.CardBody([
-                    html.H6("Days to Reach 5% Target Return", className="card-title"),
+                    html.H6("Täg zum 5% Rendite erreiche", className="card-title"),
                     html.H2(id='breakeven_output', className="text-success")
                 ], className="text-center")), md=6),
             ]),
@@ -223,22 +223,22 @@ def update_dashboard(tourist_days, friends_days, family_days, apt_price, loan_am
     
     # --- Main Investment Chart ---
     fig_main = go.Figure()
-    fig_main.add_trace(go.Scatter(x=df['Year'], y=df['Property Value'], mode='lines', name='Property Value', line=dict(color='royalblue', width=3), fill='tozeroy'))
-    fig_main.add_trace(go.Scatter(x=df['Year'], y=df['Equity'], mode='lines', name='Equity', line=dict(color='seagreen', width=3)))
-    fig_main.add_trace(go.Bar(x=df['Year'], y=df['Net Cash Flow'], name='Net Annual Cash Flow', yaxis='y2', marker_color='rgba(255, 99, 71, 0.6)'))
-    fig_main.update_layout(title="<b>Financial Projections</b>", yaxis_title="Value in Euros (€)",
-        yaxis=dict(tickformat=",.0f"), yaxis2=dict(title="Cash Flow (€)", overlaying='y', side='right', showgrid=False, tickformat=",.0f"),
+    fig_main.add_trace(go.Scatter(x=df['Year'], y=df['Property Value'], mode='lines', name='Wohnigspriis', line=dict(color='royalblue', width=3), fill='tozeroy'))
+    fig_main.add_trace(go.Scatter(x=df['Year'], y=df['Equity'], mode='lines', name='Eigekapital', line=dict(color='seagreen', width=3)))
+    fig_main.add_trace(go.Bar(x=df['Year'], y=df['Net Cash Flow'], name='Stutz wo usegaht', yaxis='y2', marker_color='rgba(255, 99, 71, 0.6)'))
+    fig_main.update_layout(title="<b>Projektione</b>", yaxis_title="Euros (€)",
+        yaxis=dict(tickformat=",.0f"), yaxis2=dict(title="", overlaying='y', side='right', showgrid=False, tickformat=",.0f"),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
 
     # --- Costs Breakdown Chart ---
     fig_costs = go.Figure()
-    fig_costs.add_trace(go.Bar(x=df['Year'], y=df['Interest Paid'], name='Interest Paid', marker_color='#636EFA'))
-    fig_costs.add_trace(go.Bar(x=df['Year'], y=df['Principal Paid'], name='Principal Paid', marker_color='#EF553B'))
-    fig_costs.add_trace(go.Bar(x=df['Year'], y=df['Fixed Costs'], name='Fixed Costs', marker_color='#00CC96'))
+    fig_costs.add_trace(go.Bar(x=df['Year'], y=df['Interest Paid'], name='Zinszahlige', marker_color='#636EFA'))
+    fig_costs.add_trace(go.Bar(x=df['Year'], y=df['Principal Paid'], name='Kreditrückzahlige', marker_color='#EF553B'))
+    fig_costs.add_trace(go.Bar(x=df['Year'], y=df['Fixed Costs'], name='Fixköste', marker_color='#00CC96'))
     fig_costs.update_layout(
-        title="<b>Annual Costs Breakdown</b>",
-        xaxis_title="Year",
-        yaxis_title="Costs in Euros (€)",
+        title="<b>Jährlichi Köste</b>",
+        xaxis_title="Jahr",
+        yaxis_title="Euros (€)",
         yaxis=dict(tickformat=",.0f"),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         barmode='stack'
