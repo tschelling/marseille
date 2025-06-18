@@ -1,0 +1,1 @@
+web: gunicorn marseille_dashboard:server
